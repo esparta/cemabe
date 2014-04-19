@@ -9,7 +9,7 @@ Base = declarative_base()
 class Entidad(Base):
     __tablename__ = 'entidades'
  
-    id = Column(Integer, primary_key=True)
+    entidadID = Column(Integer, primary_key=True)
     cve_ent = Column(String(2))
     nom_ent = Column(String(50))
     nom_abr = Column(String(5))
@@ -21,12 +21,13 @@ class Entidad(Base):
     vtot = Column(Integer)
 
     def __repr__(self):
-        return "<Entidad(cve_ent='{cve_ent}', nombre='{nom_ent}')>".format(*self)
+        return "<Entidad(cve_ent='{self.cve_ent}', nombre='{self.nom_ent}')>".format(self=self)
 
 class Municipio(Base):
     __tablename__ = 'municipios'
 
-    id = Column(Integer, primary_key=True)
+    municipioID = Column(Integer, primary_key=True)
+    cve_ent = Column(String(2))
     cve_ent = Column(String(2))
     nom_ent = Column(String(50))
     nom_abr = Column(String(5))
@@ -40,4 +41,4 @@ class Municipio(Base):
     vtot = Column(Integer)
 
     def __repr__(self):
-      return "<Municipio(cve_mun='{cve_mun}', nombre='{nom_mun}'".format(*self)
+        return "<Municipio(cve_mun='{self.cve_mun}', nombre='{self.nom_mun}'".format(self=self)
