@@ -1,16 +1,15 @@
-from sqlalchemy import Column, Integer, String, DateTime
+
+from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm.exc import NoResultFound
+
 
 Base = declarative_base()
 
 class Entidad(Base):
     __tablename__ = 'entidades'
- 
-    entidadID = Column(Integer, primary_key=True)
-    cve_ent = Column(String(2))
+
+    cve_ent = Column(String(2), primary_key=True)
     nom_ent = Column(String(50))
     nom_abr = Column(String(5))
     cve_cap = Column(String(7))
@@ -26,12 +25,11 @@ class Entidad(Base):
 class Municipio(Base):
     __tablename__ = 'municipios'
 
-    municipioID = Column(Integer, primary_key=True)
-    cve_ent = Column(String(2))
-    cve_ent = Column(String(2))
+    cve_ent = Column(String(2), ForeignKey("entidades.cve_ent"),
+                     primary_key=True)
     nom_ent = Column(String(50))
     nom_abr = Column(String(5))
-    cve_mun = Column(String(3))
+    cve_mun = Column(String(3), primary_key=True)
     nom_mun = Column(String(100))
     cve_cab = Column(String(4))
     nom_cab = Column(String(100))
@@ -42,3 +40,4 @@ class Municipio(Base):
 
     def __repr__(self):
         return "<Municipio(cve_mun='{self.cve_mun}', nombre='{self.nom_mun}'".format(self=self)
+
