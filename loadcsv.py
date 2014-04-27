@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, Table
 from sqlalchemy.engine.url import URL
 from business import Base
 import csv
-import settings ##Configuration file
+import settings  # Configuration file
 
 
 def db_connect(**kwargs):
@@ -15,6 +15,7 @@ def db_connect(**kwargs):
        Return a engine connection
     """
     return create_engine(URL(**settings.DATABASE), **kwargs)
+
 
 def genvalues(columns, iterator, limit=50000):
     """ Given an iterator, return a list of dictionaries
@@ -31,6 +32,7 @@ def genvalues(columns, iterator, limit=50000):
 engine = db_connect(echo=False)
 
 Base.metadata.create_all(engine)
+
 
 def main():
     """ main loop, get the tables """
@@ -51,6 +53,7 @@ def main():
             with engine.begin() as conn:
                 for values in genvalues(columns, reader):
                     conn.execute(entity.insert(), values)
+
 
 if __name__ == "__main__":
     main()
