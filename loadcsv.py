@@ -3,12 +3,18 @@
    Decription: Script to load the CSV files to a database
 """
 from sqlalchemy import create_engine, Table
+from sqlalchemy.engine.url import URL
 from business import Base
 import csv
+import settings ##Configuration file
 
-engine = create_engine("sqlite:///data.db", echo=False)
 
-Base.metadata.create_all(engine)
+def db_connect(**kwargs):
+    """Perform a connection based on the settings.py configuration
+       file.
+       Return a engine connection
+    """
+    return create_engine(URL(**settings.DATABASE), **kwargs)
 
 def genvalues(columns, iterator, limit=50000):
     """ Given an iterator, return a list of dictionaries
@@ -20,6 +26,11 @@ def genvalues(columns, iterator, limit=50000):
             yield results
             results = []
     yield results
+
+
+engine = db_connect(echo=False)
+
+Base.metadata.create_all(engine)
 
 def main():
     """ main loop, get the tables """
@@ -43,4 +54,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
